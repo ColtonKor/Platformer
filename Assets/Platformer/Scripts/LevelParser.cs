@@ -5,10 +5,13 @@ using UnityEngine;
 public class LevelParser : MonoBehaviour
 {
     public string filename;
+    public GameObject Character;
     public GameObject rockPrefab;
     public GameObject brickPrefab;
     public GameObject questionBoxPrefab;
     public GameObject stonePrefab;
+    public GameObject avoidPrefab;
+    public GameObject winPrefab;
     public Transform environmentRoot;
 
     // --------------------------------------------------------------------------
@@ -48,6 +51,9 @@ public class LevelParser : MonoBehaviour
 
         int row = 0;
 
+        // Vector3 charPos = new Vector3(18.24f,1.54f,-0.29f);
+        // Instantiate(Character, charPos, Quaternion.identity, environmentRoot);
+
         // Go through the rows from bottom to top
         while (levelRows.Count > 0)
         {
@@ -76,6 +82,14 @@ public class LevelParser : MonoBehaviour
                     Vector3 newPos = new Vector3(column, row, 0f);
                     Instantiate(questionBoxPrefab, newPos, Quaternion.identity, environmentRoot);
                 }
+                if(letter == 'a'){
+                    Vector3 newPos = new Vector3(column, row, 0f);
+                    Instantiate(avoidPrefab, newPos, Quaternion.identity, environmentRoot);
+                }
+                if(letter == 'w'){
+                    Vector3 newPos = new Vector3(column, row, 0f);
+                    Instantiate(winPrefab, newPos, Quaternion.identity, environmentRoot);
+                }
                 // column++;
             }
             row++;
@@ -89,6 +103,7 @@ public class LevelParser : MonoBehaviour
         {
            Destroy(child.gameObject);
         }
+        Character.transform.position = new Vector3(18.24f,1.54f,-0.29f);
         LoadLevel();
     }
 }
