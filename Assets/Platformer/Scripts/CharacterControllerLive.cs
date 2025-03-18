@@ -47,7 +47,7 @@ public class CharacterControllerLive : MonoBehaviour
         } else {
             speedTemp = acceleration;
         }
-        rb.velocity += Vector3.right * horizontalMovement * Time.deltaTime * speedTemp;
+        rb.linearVelocity += Vector3.right * horizontalMovement * Time.deltaTime * speedTemp;
         // rb.velocity *= Mathf.Abs(horizontalMovement);
         Collider col = GetComponent<Collider>();
         float halfHeight = col.bounds.extents.y + 0.01f;
@@ -76,15 +76,15 @@ public class CharacterControllerLive : MonoBehaviour
             rb.AddForce(Vector3.up * jumpImpulse, ForceMode.Impulse);
         } 
         else if (!isGrounded && Input.GetKeyDown(KeyCode.Space)){
-            if(rb.velocity.y > 0){
+            if(rb.linearVelocity.y > 0){
                 rb.AddForce(Vector3.up * jumpBoost, ForceMode.Force);
             }
         }
 
-        if(Mathf.Abs(rb.velocity.x) > maxSpeed){
-            Vector3 newVel = rb.velocity;
+        if(Mathf.Abs(rb.linearVelocity.x) > maxSpeed){
+            Vector3 newVel = rb.linearVelocity;
             newVel.x = Mathf.Clamp(newVel.x, -maxSpeed, maxSpeed);
-            rb.velocity = newVel;
+            rb.linearVelocity = newVel;
         }
 
         // if(isGrounded && Mathf.Abs(horizontalMovement) < .5f){
@@ -93,10 +93,10 @@ public class CharacterControllerLive : MonoBehaviour
         //     rb.velocity = newVel;
         // }
 
-        float yaw = (rb.velocity.x > 0) ? 90 : -90;
+        float yaw = (rb.linearVelocity.x > 0) ? 90 : -90;
         transform.rotation = Quaternion.Euler(0f , yaw, 0f);
 
-        float speed = Mathf.Abs(rb.velocity.x);
+        float speed = Mathf.Abs(rb.linearVelocity.x);
         Animator anim = GetComponent<Animator>();
         anim.SetFloat("Speed", speed);
         anim.SetBool("In Air", !isGrounded);

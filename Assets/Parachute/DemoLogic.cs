@@ -38,7 +38,7 @@ public class DemoLogic : MonoBehaviour
     {
         RaycastHit hitInfo;
         if(Physics.Raycast(package.transform.position, Vector3.down, out hitInfo, deploymentHeight)){
-            package.GetComponent<Rigidbody>().drag = parachuteDrag;
+            package.GetComponent<Rigidbody>().linearDamping = parachuteDrag;
             parachute.SetActive(true);
             // Debug.DrawRay(package.transform.position, Vector3.down * deploymentHeight, Color.red, 5f);
 
@@ -47,7 +47,7 @@ public class DemoLogic : MonoBehaviour
             }
         } else {
             parachute.SetActive(false);
-            package.GetComponent<Rigidbody>().drag = originalDrag;
+            package.GetComponent<Rigidbody>().linearDamping = originalDrag;
             // Debug.DrawRay(package.transform.position, Vector3.down * deploymentHeight, Color.cyan, 5f);
         }
     }
